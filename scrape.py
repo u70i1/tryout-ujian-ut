@@ -1,5 +1,6 @@
 import requests
 import sys
+import json
 from bs4 import BeautifulSoup
 
 if len(sys.argv) < 2:
@@ -12,14 +13,27 @@ soup = BeautifulSoup(doc, "html.parser")
 
 cards = soup.find_all("div", class_="question-card")
 
-for idx, card in enumerate(cards):
+all_questions = []
+
+for card in cards:
     correct = card.get("data-correct")
     question = card.find("p", class_="question-text").get_text()
     options = card.find_all("li", class_="option-item")
-    correct_explanation = card.find("span", class_="answer-reason")
+    explanation_tag = card.find("span", class_="answer-reason")
 
-    print(f"{idx+1}. {question}")
-    for option in options:
-        print(option.get_text())
-    print()
+    # sometimes there's no answer explanation
+    answer_explanation = explanation_tag.get_text() if explanation_tag else None
 
+    question = {
+        "questionText": question,
+        "correctAnswerIndex": ord(correct) - ord("A") if correct else -1,
+        "options": [option.get_text() for option in options],
+        "answerExplanation": answer_explanation
+    }
+
+    all_questions.append(question)
+
+# with open("questions.json", "w", encoding="utf-8") as f:
+#     json.dump(all_questions, f, indent=2, ensure_ascii=False)
+
+json.dumps(all_questions, indent=2, ensure_ascii=False)

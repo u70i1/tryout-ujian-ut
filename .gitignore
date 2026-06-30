@@ -1,3 +1,5 @@
 .venv/
-example.html
+.vscode/
 s.json
+example.html
+questions.json
