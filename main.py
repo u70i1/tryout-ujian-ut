@@ -1,4 +1,5 @@
 import requests
+import re
 from bs4 import BeautifulSoup
 from fastapi import FastAPI
 
@@ -30,7 +31,8 @@ def scrape(slug: str):
             # correct answer is presented by the letter index
             # and if for some reason there's no correct answer, return -1
             "correctAnswerIndex": ord(correct) - ord("A") if correct else -1,
-            "options": [option.get_text() for option in options],
+            # regex here removes
+            "options": [re.sub(r"[A-Z]\. ", "", option.get_text()) for option in options],
             "answerExplanation": answer_explanation
         }
 
