@@ -21,11 +21,13 @@ for card in cards:
     options = card.find_all("li", class_="option-item")
     explanation_tag = card.find("span", class_="answer-reason")
 
-    # sometimes there's no answer explanation
+    # sometimes there's no explanation for the answer
     answer_explanation = explanation_tag.get_text() if explanation_tag else None
 
     question = {
         "questionText": question,
+        # correct answer is presented by the letter index
+        # and if for some reason there's no correct answer, return -1
         "correctAnswerIndex": ord(correct) - ord("A") if correct else -1,
         "options": [option.get_text() for option in options],
         "answerExplanation": answer_explanation
@@ -36,4 +38,4 @@ for card in cards:
 # with open("questions.json", "w", encoding="utf-8") as f:
 #     json.dump(all_questions, f, indent=2, ensure_ascii=False)
 
-json.dumps(all_questions, indent=2, ensure_ascii=False)
+print(json.dumps(all_questions, indent=2, ensure_ascii=False))
