@@ -31,7 +31,7 @@ def scrape(slug: str):
             # correct answer is presented by the letter index
             # and if for some reason there's no correct answer, return -1
             "correctAnswerIndex": ord(correct) - ord("A") if correct else -1,
-            # regex here removes
+            # regex here removes letter prefix in options
             "options": [re.sub(r"[A-Z]\. ", "", option.get_text()) for option in options],
             "answerExplanation": answer_explanation
         }
