@@ -2,4 +2,6 @@
 
 WIP :)
 
-update: this project has been stopped because they've just added the tryout feature :')
+update: i stopped this project because they've added the built-in tryout feature :')
+
+check out the website: [soalut.com](https://soalut.com)
